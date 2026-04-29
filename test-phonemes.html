@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Phoneme Sound Test</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Helvetica Neue', sans-serif;
+      background: #0A2B4E;
+      color: white;
+      padding: 30px;
+    }
+    h1 { font-size: 2rem; margin-bottom: 8px; color: #FFD166; }
+    p  { color: rgba(255,255,255,0.6); margin-bottom: 24px; }
+    .group { margin-bottom: 28px; }
+    .group-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #00B4D8;
+      margin-bottom: 10px;
+    }
+    .buttons { display: flex; flex-wrap: wrap; gap: 10px; }
+    button {
+      width: 90px; height: 90px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.12);
+      border: 2px solid rgba(255,255,255,0.2);
+      color: white;
+      font-size: 1.8rem;
+      font-weight: 900;
+      cursor: pointer;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 4px;
+      transition: all 0.15s ease;
+      font-family: inherit;
+    }
+    button span.sub { font-size: 0.6rem; font-weight: 600; opacity: 0.6; }
+    button:hover   { background: rgba(255,209,102,0.2); border-color: #FFD166; }
+    button:active  { transform: scale(0.95); }
+    button.playing { background: rgba(255,209,102,0.4); border-color: #FFD166; box-shadow: 0 0 20px #FFD16688; }
+  </style>
+</head>
+<body>
+  <h1>Phoneme Sound Test</h1>
+  <p>Tap each letter — you should hear the actual mouth sound, not the letter name.</p>
+
+  <div class="group">
+    <div class="group-label">Short Vowels</div>
+    <div class="buttons" id="vowels"></div>
+  </div>
+  <div class="group">
+    <div class="group-label">Continuant Consonants (hiss / hum)</div>
+    <div class="buttons" id="continuants"></div>
+  </div>
+  <div class="group">
+    <div class="group-label">Stop Consonants (pop / tap)</div>
+    <div class="buttons" id="stops"></div>
+  </div>
+  <div class="group">
+    <div class="group-label">Digraphs</div>
+    <div class="buttons" id="digraphs"></div>
+  </div>
+  <div class="group">
+    <div class="group-label">Long Vowels & Vowel Teams</div>
+    <div class="buttons" id="longvowels"></div>
+  </div>
+
+  <script>
+    const GROUPS = {
+      vowels:      [['a','cat'],['e','bed'],['i','sit'],['o','hot'],['u','cup']],
+      continuants: [['s','snake'],['f','fish'],['v','van'],['z','zip'],['m','moon'],['n','net'],['l','lamp'],['r','rat'],['h','hat'],['w','web'],['y','yes']],
+      stops:       [['p','pop'],['b','bat'],['t','tap'],['d','dog'],['k','kit'],['g','get'],['j','jet'],['x','fox']],
+      digraphs:    [['sh','ship'],['ch','chin'],['th','thin'],['wh','when']],
+      longvowels:  [['a_e','cake'],['i_e','kite'],['o_e','bone'],['u_e','flute'],['ai','rain'],['ay','day'],['ee','see'],['ea','sea'],['oa','boat'],['oo','moon']],
+    };
+
+    const cache = {};
+    const allPhonemes = Object.values(GROUPS).flat().map(([ph]) => ph);
+
+    // Preload all wav files
+    allPhonemes.forEach(ph => {
+      const audio = new Audio(`/sounds/phonemes/${ph}.wav`);
+      audio.preload = 'auto';
+      audio.addEventListener('canplaythrough', () => { cache[ph] = audio; }, { once: true });
+      audio.load();
+    });
+
+    function play(ph) {
+      const audio = cache[ph];
+      if (!audio) { console.warn('not loaded:', ph); return; }
+      audio.cloneNode().play().catch(()=>{});
+    }
+
+    Object.entries(GROUPS).forEach(([id, entries]) => {
+      const container = document.getElementById(id);
+      entries.forEach(([phoneme, label]) => {
+        const btn = document.createElement('button');
+        btn.innerHTML = `${phoneme.replace('_e','<small>e</small>')}<span class="sub">${label}</span>`;
+        btn.addEventListener('pointerdown', () => {
+          btn.classList.add('playing');
+          play(phoneme);
+          setTimeout(() => btn.classList.remove('playing'), 600);
+        });
+        container.appendChild(btn);
+      });
+    });
+  </script>
+</body>
+</html>
