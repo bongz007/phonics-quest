@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react';
 import { useProgress } from './hooks/useProgress.js';
 import { getLevelById, getWordsForLevel } from './engine/phonicsEngine.js';
+import { Analytics } from '@vercel/analytics/react';
 
 import WorldSelect    from './components/WorldSelect.jsx';
 import StoryPrompt    from './components/StoryPrompt.jsx';
@@ -133,6 +134,7 @@ export default function App() {
           onClose={() => go('map')}
         />
       )}
+      <Analytics />
     </div>
   );
 }
