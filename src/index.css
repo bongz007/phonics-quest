@@ -861,3 +861,279 @@ button {
 ::-webkit-scrollbar       { width: 6px; }
 ::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); }
 ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 3px; }
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE — Mobile, landscape, desktop optimisation
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Fluid game-tile sizing (overridden per breakpoint below) ── */
+:root {
+  --slot-size: 110px;
+  --rune-size: 120px;
+  --slot-font: 2.2rem;
+  --rune-font: 2.4rem;
+}
+
+/* ── Desktop / large screens (≥ 1024px) ───────────────────────── */
+@media (min-width: 1024px) {
+  .minigame {
+    max-width: 820px;
+    margin: 0 auto;
+  }
+  .choice-grid { max-width: 480px; }
+  .bridge-header,
+  .bridge-scene,
+  .phoneme-chips { max-width: 820px; margin-left: auto; margin-right: auto; }
+  .parent-dashboard { max-width: 920px; margin: 0 auto; }
+  .world-cards { max-width: 1200px; }
+  .ws-title { font-size: 3.2rem; }
+}
+
+/* ── Mobile phones (≤ 600px portrait) ─────────────────────────── */
+@media (max-width: 600px) {
+  :root {
+    --slot-size:  clamp(70px, 24vw, 104px);
+    --rune-size:  clamp(74px, 25vw, 110px);
+    --slot-font:  clamp(1.5rem, 5.2vw, 2.1rem);
+    --rune-font:  clamp(1.6rem, 5.6vw, 2.3rem);
+  }
+
+  /* Loading */
+  .loading-anim { font-size: 3.5rem; }
+  .loading-text { font-size: 1.3rem; }
+
+  /* World Select — stack cards vertically */
+  .world-select { padding: 12px 10px; gap: 10px; }
+  .ws-title   { font-size: 2rem; }
+  .ws-subtitle{ font-size: 1.05rem; }
+  .world-cards {
+    flex-direction: column;
+    gap: 10px;
+    max-width: 100%;
+  }
+  .world-card {
+    flex-direction: row;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    min-height: 0;
+  }
+  .wc-hero    { font-size: 3.2rem; flex-shrink: 0; }
+  .wc-icon    { display: none; }
+  .wc-info    { text-align: left; }
+  .wc-name    { font-size: 1.15rem; }
+  .wc-tagline { font-size: 0.82rem; }
+  .wc-desc, .wc-features { display: none; }
+  .wc-tap     { font-size: 0.9rem; margin-top: 2px; }
+  .world-select-waves { display: none; }
+
+  /* Story */
+  .story-content { padding: 24px 18px; max-width: 100%; }
+  .story-text { font-size: 1.35rem; }
+  .story-tap-hint { font-size: 1rem; }
+
+  /* Reward */
+  .creature-card  { width: 130px; height: 130px; }
+  .creature-emoji { font-size: 4.5rem; }
+  .creature-name  { font-size: 1.6rem; }
+  .creature-desc  { font-size: 0.95rem; }
+
+  /* World Map */
+  .map-header { padding: 8px 14px; gap: 10px; }
+  .map-title  { font-size: 1.1rem; }
+  .node-icon  { width: 52px; height: 52px; font-size: 1.5rem; }
+  .map-node   { min-width: 56px; min-height: 56px; }
+  .node-label { font-size: 0.65rem; }
+  .parent-btn { padding: 8px 14px; font-size: 0.78rem; bottom: 12px; right: 12px; }
+
+  /* Companion */
+  .companion-wrapper { bottom: 10px; left: 10px; gap: 6px; }
+  .speech-bubble { max-width: 190px; font-size: 0.85rem; padding: 8px 12px; }
+  .companion-emoji { font-size: 2.8rem; }
+  .companion-name  { font-size: 0.65rem; }
+
+  /* Game commons */
+  .minigame { padding: 10px 8px; gap: 8px; }
+  .game-progress { top: 10px; gap: 8px; }
+  .prog-dot { width: 12px; height: 12px; }
+
+  /* ── Spell Casting ── */
+  .spell-target { margin-top: 36px; gap: 4px; }
+  .spell-image  { font-size: 3.5rem; }
+  .spell-hint   { font-size: 0.95rem; }
+
+  .magic-circle { min-height: 90px; padding: 14px 12px; gap: 8px; }
+  .circle-label { font-size: 0.7rem; }
+
+  .slot-row { gap: 8px; }
+  .letter-slot {
+    width: var(--slot-size);
+    height: var(--slot-size);
+    border-radius: 12px;
+  }
+  .slot-phoneme    { font-size: var(--slot-font); }
+  .slot-placeholder{ font-size: calc(var(--slot-font) + 0.1rem); }
+
+  .rune-tray { gap: 10px; min-height: 80px; padding: 8px; }
+  .letter-rune {
+    width: var(--rune-size);
+    height: var(--rune-size);
+    border-radius: 14px;
+    gap: 4px;
+  }
+  .rune-label { font-size: var(--rune-font); }
+  .rune-emoji { font-size: 1rem; }
+  .word-reveal { font-size: 2.2rem; letter-spacing: 4px; }
+
+  .rune-ghost {
+    width: var(--rune-size);
+    height: var(--rune-size);
+    border-radius: 14px;
+    font-size: var(--rune-font);
+  }
+
+  /* ── Sound Bridge ── */
+  .bridge-header { margin-top: 36px; gap: 8px; flex-wrap: wrap; justify-content: center; }
+  .bridge-word-card { padding: 10px 16px; min-width: 110px; gap: 2px; }
+  .bwc-image { font-size: 2rem; }
+  .bwc-word  { font-size: 1.5rem; }
+  .bwc-hint  { font-size: 0.75rem; }
+  .replay-btn{ padding: 8px 12px; font-size: 0.85rem; min-height: 52px; }
+  .tap-counter { font-size: 0.8rem; }
+  .bridge-scene  { max-height: 160px; padding: 0 6px; }
+  .island-emoji  { font-size: 2.4rem; }
+  .bridge-character { font-size: 2rem; }
+  .water         { height: 44px; }
+  .bridge-stones { height: 52px; }
+  .bridge-stone  { height: 46px; border-radius: 8px; }
+  .stone-label   { font-size: 0.82rem; }
+  .stone-emoji   { font-size: 0.7rem; }
+  .phoneme-chips { gap: 6px; padding: 4px 6px; }
+  .phoneme-chip  { padding: 6px 10px; font-size: 0.9rem; }
+  .chip-arrow    { font-size: 0.85rem; }
+
+  /* ── Creature Calling ── */
+  .creature-stage { margin-top: 36px; }
+  .creature-bush  { width: min(250px, 74vw); height: 140px; }
+  .bush-emoji     { font-size: 2.2rem; }
+  .creature-pop   { font-size: 3.5rem; }
+  .creature-name  { font-size: 0.9rem; }
+  .reveal-letter  { font-size: 1.6rem; }
+  .sound-panel    { gap: 8px; }
+  .sound-label    { font-size: 1rem; }
+  .sound-btn      { padding: 12px 22px; font-size: 1rem; min-height: 56px; gap: 8px; }
+  .choice-grid    { gap: 12px; max-width: 100%; }
+  .letter-choice  { height: 100px; border-radius: 14px; gap: 6px; }
+  .choice-label   { font-size: 2.3rem; }
+  .choice-emoji   { font-size: 1.1rem; }
+
+  /* ── Parent Dashboard ── */
+  .pd-header  { padding: 12px 14px; }
+  .pd-title   { font-size: 1.1rem; }
+  .pd-child   { font-size: 0.82rem; }
+  .pd-close   { padding: 8px 12px; font-size: 0.82rem; }
+  .pd-summary { padding: 10px 14px; gap: 8px; }
+  .pd-stat-card  { padding: 10px 6px; }
+  .pd-stat-value { font-size: 1.5rem; }
+  .pd-stat-label { font-size: 0.68rem; }
+  .pd-current-level { margin: 0 14px; padding: 10px 14px; }
+  .pd-tabs    { padding: 8px 14px 0; gap: 2px; }
+  .pd-tab     { padding: 8px 6px; font-size: 0.8rem; }
+  .pd-content { padding: 12px 14px; }
+  .pd-section-title { font-size: 0.85rem; }
+  .pd-explain { font-size: 0.85rem; }
+  .lpl-name   { width: 90px; font-size: 0.78rem; }
+  .sr-date    { width: 72px; font-size: 0.72rem; }
+  .sr-level   { font-size: 0.78rem; }
+  .sr-game    { font-size: 0.72rem; }
+  .sr-acc     { font-size: 0.9rem; }
+  .ac-emoji   { font-size: 2rem; }
+  .ac-title   { font-size: 0.9rem; }
+  .ac-desc    { font-size: 0.82rem; }
+}
+
+/* ── Very small screens (≤ 360px) ─────────────────────────────── */
+@media (max-width: 360px) {
+  :root {
+    --slot-size: clamp(62px, 22vw, 88px);
+    --rune-size: clamp(66px, 23vw, 92px);
+    --slot-font: clamp(1.3rem, 4.5vw, 1.8rem);
+    --rune-font: clamp(1.35rem, 4.8vw, 1.9rem);
+  }
+  .ws-title   { font-size: 1.7rem; }
+  .story-text { font-size: 1.15rem; }
+  .slot-row   { gap: 6px; }
+  .rune-tray  { gap: 8px; }
+  .letter-choice { height: 88px; }
+  .choice-label  { font-size: 2rem; }
+  .pd-stat-value { font-size: 1.3rem; }
+}
+
+/* ── Landscape phones (height ≤ 500px) ─────────────────────────── */
+@media (max-height: 500px) and (orientation: landscape) {
+  /* World select — horizontal scroll */
+  .world-select  { padding: 8px; gap: 8px; flex-direction: column; }
+  .ws-title      { font-size: 1.4rem; }
+  .ws-subtitle   { font-size: 0.85rem; }
+  .world-cards {
+    flex-direction: row;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    flex-wrap: nowrap;
+    gap: 10px;
+    padding-bottom: 4px;
+  }
+  .world-card {
+    flex: 0 0 200px;
+    min-width: 200px;
+    padding: 10px 12px;
+    gap: 8px;
+  }
+  .wc-hero     { font-size: 2.4rem; }
+  .wc-icon     { font-size: 1.2rem; }
+  .wc-name     { font-size: 1rem; }
+  .wc-tagline  { font-size: 0.75rem; }
+  .wc-desc, .wc-features { display: none; }
+  .wc-tap      { font-size: 0.8rem; }
+
+  /* Game layout — compress vertically */
+  .minigame    { padding: 6px 10px; gap: 5px; }
+
+  .spell-target  { margin-top: 22px; gap: 3px; }
+  .spell-image   { font-size: 2.4rem; }
+  .magic-circle  { min-height: 76px; padding: 10px; gap: 6px; }
+  .circle-label  { display: none; }
+  .letter-slot   { width: 82px; height: 82px; }
+  .letter-rune   { width: 86px; height: 86px; }
+  .rune-ghost    { width: 86px; height: 86px; }
+  .rune-label    { font-size: 1.9rem; }
+  .rune-tray     { min-height: 70px; gap: 8px; }
+
+  .bridge-header { margin-top: 22px; gap: 8px; }
+  .bridge-scene  { max-height: 120px; }
+  .water         { height: 36px; }
+  .bridge-stones { height: 44px; }
+  .bridge-stone  { height: 38px; }
+
+  .creature-stage { margin-top: 22px; flex: 0 0 auto; }
+  .creature-bush  { height: 110px; }
+  .bush-emoji     { font-size: 1.8rem; }
+
+  .sound-panel    { gap: 5px; }
+  .sound-label    { font-size: 0.88rem; }
+  .sound-btn      { padding: 8px 16px; min-height: 48px; font-size: 0.9rem; }
+  .choice-grid    { gap: 8px; max-width: 300px; }
+  .letter-choice  { height: 76px; }
+  .choice-label   { font-size: 1.8rem; }
+  .choice-emoji   { font-size: 0.95rem; }
+
+  /* Companion — hide speech bubble to save space */
+  .speech-bubble  { display: none; }
+  .companion-wrapper { bottom: 5px; left: 8px; }
+  .companion-emoji { font-size: 2.4rem; }
+
+  /* Parent dashboard */
+  .pd-summary { flex-wrap: wrap; }
+  .pd-stat-card { min-width: 80px; }
+}
